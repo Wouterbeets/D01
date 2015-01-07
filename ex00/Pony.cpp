@@ -6,7 +6,7 @@
 /*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/06 09:45:45 by wbeets            #+#    #+#             */
-/*   Updated: 2015/01/06 12:01:16 by wbeets           ###   ########.fr       */
+/*   Updated: 2015/01/06 15:26:57 by wbeets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Pony::Pony(void) {
 	this->attack = 2;
 	this->ridden = false;
 	this->weapon = "none";
-	this->speed = 2;
+	this->speed = 3;
 }
 
 Pony::~Pony(){
@@ -111,10 +111,10 @@ void			Pony::Whip(){
 }
 
 int				Pony::AttackPony(Pony *p){
-	if(this->speed < p->GetSpeed()){
+	if(this->speed > p->GetSpeed()){
 		p->RecDamage(this->attack);
 		if(p->GetHP() > 0){
-			std::cout << p->GetName() << " takes a hit from your " << this->weapon  << " but manages to stay up";
+			std::cout << p->GetName() << " takes a hit from your " << this->weapon  << " but manages to stay up" << std::endl;
 			return (this->attack - p->defense);
 		}
 		else {
@@ -122,12 +122,12 @@ int				Pony::AttackPony(Pony *p){
 			return -99;
 		}
 	}
-	std::cout << "your are not going quick enouch to catch up with " << p->GetName() << "try whipping" << std::endl; 
+	std::cout << "your are not going quick enouch to catch up with " << p->GetName() << " try whipping" << std::endl; 
 	return 0;
 }
 
 int				Pony::RecDamage(int damage){
-	this->hP = (damage - this->defense);
+	this->hP -= (damage - this->defense);
 	return 0;
 }
 

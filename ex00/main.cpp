@@ -6,7 +6,7 @@
 /*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/06 09:45:58 by wbeets            #+#    #+#             */
-/*   Updated: 2015/01/06 12:04:42 by wbeets           ###   ########.fr       */
+/*   Updated: 2015/01/06 15:32:16 by wbeets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include "pony.hpp"
 
-void	stack(){
+void	ponyOnTheStack(){
 	Pony	p;
 	Pony 	*p2 = new Pony;
 	std::string		buff;
@@ -29,10 +29,12 @@ void	stack(){
 	{
 		p.SetAttack(10);
 		p.SetDefense(8);
+		p.SetWeapon(buff);
 	}
 	else {
 		p.SetAttack(12);
 		p.SetDefense(4);
+		p.SetWeapon(buff);
 	}
 	while(42){
 		std::cout << "choose whip, attack, ride, get off  or exit:";
@@ -43,6 +45,8 @@ void	stack(){
 		else if (buff.compare("attack") == 0){
 			if(p.AttackPony(p2) == -99){
 				std::cout << "You won, but there is an atomic bomb and everybody dies" << std::endl;
+				delete p2;
+				return;
 			}
 		}
 		else if (buff.compare("ride") == 0){
@@ -60,11 +64,10 @@ void	stack(){
 	}
 }
 
-void	heap(){
+void	ponyOnTheHeap(){
 	Pony	*p = new Pony();
 	Pony 	p2;
 	std::string		buff;
-	std::string		master;
 	
 	p2.SetName("Evil No Good Filthy Stupid Pony");
 	std::cout << "please name your pony: ";	
@@ -76,13 +79,15 @@ void	heap(){
 	{
 		p->SetAttack(10);
 		p->SetDefense(8);
+		p->SetWeapon(buff);
 	}
 	else {
 		p->SetAttack(12);
 		p->SetDefense(4);
+		p->SetWeapon(buff);
 	}
 	while(42){
-		std::cout << "choose whip, attack, ride, get off  or exit:";
+		std::cout << "choose whip, attack, ride, get off  or exit: ";
 		std::getline(std::cin,buff);
 		if (buff.compare("whip") == 0){
 			p->Whip();	
@@ -90,12 +95,14 @@ void	heap(){
 		else if (buff.compare("attack") == 0){
 			if(p->AttackPony(&p2) == -99){
 				std::cout << "You won, but there is an atomic bomb and everybody dies" << std::endl;
+				delete p;
+				return;
 			}
 		}
 		else if (buff.compare("ride") == 0){
 			std::cout << "type your name so the pony knows what brave knight is mounting it";
 			std::getline(std::cin ,buff);
-			p->Ride(master);
+			p->Ride(buff);
 		}
 		else if (buff.compare("get getoff") == 0){
 			p->GetOff();	
@@ -114,15 +121,14 @@ int		main(){
 		std::cout << "Choose your pony type, type stackpony or heappony, or exit: " ;
 		std::getline(std::cin,buff);
 		if(buff.compare("stackpony") == 0){
-			stack();	
+			ponyOnTheStack();	
 		}
 		else if(buff.compare("heappony") == 0){
-			heap();
+			ponyOnTheHeap();
 		}
-		else if(buff.compare("exit")){
+		else if(buff.compare("exit") == 0){
 			return 0;
 		}
-		return 0;
 	}
 }
 
